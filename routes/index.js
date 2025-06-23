@@ -19,6 +19,12 @@ var fs = require('fs');
 // prototype-pollution
 var _ = require('lodash');
 
+exports.helloWorld = function (req, res) {
+  const name = req.query.name || 'World';
+  // Vulnerable: unsanitized user input is rendered directly
+  res.send(`<h1>Hello, ${name}!</h1>`);
+};
+
 exports.index = function (req, res, next) {
   Todo.
     find({}).

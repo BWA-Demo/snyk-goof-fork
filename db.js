@@ -52,3 +52,15 @@ User.find({ username: 'admin' }).exec(function (err, users) {
       });
   }
 });
+
+// Vulnerable hello-world function (XSS)
+const sanitizeHtml = require('sanitize-html');
+function helloWorld(req, res) {
+  // Takes user input from query param and reflects it without sanitization
+  const name = sanitizeHtml(req.query.name || 'World');
+  res.send(`<h1>Hello, ${name}!</h1>`);
+}
+
+module.exports = {
+  helloWorld
+};
